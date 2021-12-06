@@ -1,0 +1,197 @@
+#+BEGIN_CENTER
+                          _ __ ___   ___  _____      __
+                         | '_ ` _ \ / _ \/ _ \ \ /\ / /
+                         | | | | | |  __/ (_) \ V  V /
+                         |_| |_| |_|\___|\___/ \_/\_/
+                         Modal Editing Of Wonder
+#+END_CENTER
+
+ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
+
+Welcome to Meow! Meow is a modal-editing package for Emacs, inspired by Kakoune.
+This is a hands-on tutorial. It aims to help both new and experienced Emacs
+users get started with or migrate to Meow as easily as possible.
+
+During the learning period, it is useful to activate an automatically displayed
+contextual help for commands in normal mode: `:set -add global autoinfo normal`
+
+In the first section, you will learn about the basics of movement and editing.
+This will give you a feel for Meow.
+
+In the second section, you will learn more advanced functionalities such as
+'expand' and 'inner-of', which will enable you to move further and faster. The
+selection of text will also become more accurate and flexible.
+
+#+BEGIN_QUOTE
+If the cat comes up and it sits in my lap, I want to hear the sound of the cat
+purring, not the fans of the computer.
+    -- Linus Torvalds
+#+END_QUOTE
+
+ฅ^•ﻌ•^ฅ ---------------------------- BASICS ---------------------------- ฅ^•ﻌ•^ฅ
+
+                    🐾 MODES
+                    In "modal editing", users interact with the text through
+       .---,        modes. There are *five* modes in Meow and the most used two
+       | i |        are *NORMAL* and *INSERT*. If you set up Meow properly, at
+       `---'        the bottom left you should see NORMAL, indicating you are
+                    now in normal mode. Make sure Caps Lock is OFF and press
+                    ~i~. The indicator turns to INSERT and you are able to type
+       .---,        in characters as usual. This is insert mode. Press ~ESC~ or
+       |esc|        ~C-[~ to leave it and return to normal mode. The other
+       `---'        three modes are *MOTION*, *KEYPAD*, and *BEACON*. It is not
+                    the focus of this tutorial and will be briefly explained in
+                    a later section.
+
+
+                    🐾 MOVEMENT
+                    The movement in a buffer (representations of the content
+       .---,        of a file opened in Emacs) can be done using the arrow keys.
+       | ↑ |        When pressed, the cursor will move one column/row in the
+   .---'---'---,    the corresponding direction. Hold the any of ~←~, ~↑~, ~→~,
+   | ← | ↓ | → |    ~↓~ to continue the movement until the place where you want
+   `---'---'---`    to stop.
+
+                    However, furthering the tradition of mode-based editors,
+ .---,---,---,---,  the ~h~, ~j~, ~k~ and ~l~ keys are often used for the same
+ | h | j | k | l |  purpose, and will respectively move the cursor to the
+ `---'---'---'---`  left, down, up, right by one, when hit. Using those keys
+   |   |   |   |    is the recommended way of moving around in a buffer.
+ .---,---,---,---,  If you're not familiar with this concept, the proximity
+ | ← | ↓ | ↑ | → |  of those four keys with the rest of the lettered keys
+ `---'---'---'---`  on a ~qwerty~ layout allows faster interaction with the
+                    cursor position than if the user had to move their hand to
+                    reach the arrow keys.
+
+                    🐾 SELECTION -- SINGLE WORD
+                    But this is still tedious. Meow offers more when it comes to
+ ▒▒▒word▋▒▒▒        moving the cursor. Press ~e~, you will see a /word/ has been
+    ⇡               selected and the cursor moves to its end. Press ~e~ again to
+ at word start      move further and select more[*]. ~b~ key does the same, but
+                    in the opposite direction.
+
+ ▒▒▒␣word▋▒▒▒       One or more extra blank spaces might be included in the
+    ⇡               selection if the cursor is before/after the word start/end.
+ before the word    In the left illustrations, symbol ▒ denotes the text around
+ after the word     the target /word/. ⇡ and ⇣ indicates where the cursor was
+         ⇣          before the movement, while  ▋ shows the cursor position (and
+ ▒▒▒▋word␣▒▒▒       shape) after the movement.
+
+                    It's therefore important to know this key idea behind Meow:
+ ▒▒▒word▋▒▒▒        *Movement means selection*. One advantage of this behavior
+    ↣↣↣↣            is that users immediately get two useful positions each time
+ move forwards      they move (and select): the start and end of a selection.
+                    Now let's try to take this advantage. Below is the first
+ ▒▒▒▋word▒▒▒        stanza of /The Naming of Cats/, and we will try to modify it
+     ↢↢↢↢           at a few places.
+ move backwards
+
+#+BEGIN_VERSE
+The Naming of Cats is a difficult matter,
+    It isn’t just one of your holiday games;
+You may think at first I’m as mad as a hatter
+When I tell you, a cat must have THREE DIFFERENT NAMES.
+
+    -- T.S. Eliot
+#+END_VERSE
+First, move the cursor (~h,j,k,l~) at the character "d" of "difficult" and press
+~e~. Now if you hit ~i~, you will enter insert mode. Type in "very" and a blank
+space, then hit ~ESC~ to return to normal mode.
+
+Move to "i" of "is" in the first line and select "is" using either ~e~ again, hit
+~a~ and you will enter insert mode again, but this time the cursor stops at the
+end of "is". Type a space and "indeed", then ~ESC~ the insert mode.
+
+If you make word-level selection and then want to cancel it, type ~g~. Note,
+moving the cursor with any of ~h,j,k,l~ also cancel this level of selection.
+Hope this simple exercise gives you a feel for the basic movement in Meow.
+Take a break and move on to the next section.
+
+#+BEGIN_QUOTE
+A cat takes more interest in your code than your spouse or your boss.
+    --Michael DiSibio
+#+END_QUOTE
+
+ฅ^•ﻌ•^ฅ ------------------------- INTERMEDIATE ------------------------- ฅ^•ﻌ•^ฅ
+
+                    🐾 SELECTION -- WORD CLUSTER
+Suppose you want to select a chunk of words instead of a single one, you can
+extend the word-level selection with ~meow-expand~. You may have already noticed
+in the previous section that when hitting ~e~ or ~b~ to move and select, there
+are digits (0-9) blinking at the end of some words ahead of or behind the
+current selection. Take the following sentence as an example.
+#+BEGIN_CENTER
+▒▒▒▒With Meow comes the power of modal editing.▒▒▒▒
+                    └─────── to select ──────┘
+#+END_CENTER
+To select the last five words, first move the cursor to "t" of "the". Then type
+~e~, and you will see some digits showing up quickly and then disappearing:
+#+BEGIN_CENTER
+▒▒▒▒With Meow comes the powe1 o2 moda3 editin4.▒▒▒▒
+                   ↱└─┘     ⇡  ⇡     ⇡       ⇡
+               selected
+#+END_CENTER
+Note except for the selected "the", all the words following have their last
+character replaced with a digit. If you feel the digit showing-up time is too
+short, you may want to add ~(setq meow-expand-hint-remove-delay 1.5)~ to your
+init.el. For now, just redo the selection and type any of 1, 2, 3, 4. Now you
+have acquired the power of ~meow-expand-x~, where x is a digit in the range of
+[0-9].
+
+                    🐾 SELECTION -- LINE
+Wanna select more? Great! Let's select lines this time. Below is the second
+stanza from /The Naming of Cats/:
+#+BEGIN_VERSE
+First of all, there’s the name that the family use daily,
+     Such as Peter, Augustus, Alonzo, or James,
+Such as Victor or Jonathan, George or Bill Bailey—
+     All of them sensible everyday names.
+     -- T.S. Eliot
+#+END_VERSE
+Move to any position in the first line, then type ~x~. Hooray! You've selected
+the first line with Meow. Press ~x~ again, you will select yet another line! You
+can keep doing this until all the lines you want are included.
+
+Now cancel the selection with ~g~ and go back to the first line. It's worth
+knowing that ~meow-expand-x~ will automatically extend to line-level when you
+select lines. Suppose you have the first line selected.
+#+BEGIN_CENTER
+First of all, there’s the name that the family use daily,
+└────────────────────── selected ──────────────────────┘
+1     Such as Peter, Augustus, Alonzo, or James,
+2uch as Victor or Jonathan, George or Bill Bailey—
+3     All of them sensible everyday names.
+4     -- T.S. Eliot
+#+END_CENTER
+Hit 4 and it will save you from typing all the extra ~x~. What's more, Meow is
+flexible enough to do this in a reversed manner. Move to the last line and
+select it, type ~;~ (~meow-reverse~). BOOM! The order of these digits has been
+reversed. Type 4 again and you will select back to the first line!
+
+                    🐾 MAKING CHANGES
+Now that you can move around and select stuff, let's start making changes to the
+text. Here is the third stanza:
+#+BEGIN_VERSE
+There are fancier names if you think they sound sweeter,
+     Some for the gentlemen, some for the dames:
+Such as Plato, Admetus, Electra, Demeter—
+     But all of them sensible everyday names,
+But I tell you, a cat needs a name that’s particular,
+     A name that’s peculiar, and more dignified,
+Else how can he keep up his tail perpendicular,
+     Or spread out his whiskers, or cherish his pride?
+Of names of this kind, I can give you a quorum,
+     Such as Munkustrap, Quaxo, or Coricopat,
+Such as Bombalurina, or else Jellylorum—
+     Names that never belong to more than one cat.
+     -- T.S. Eliot
+#+END_VERSE
+Select the "needs" on line 5 and type ~c~ (~meow-change~). The word got deleted
+and you are now in insert mode. Type in "wants" and ~ESC~ to normal mode. Let's
+say you don't like "Demeter" on line 3 and want to delete it. Move to "D" and
+press ~e~, ~s~ (~meow-kill~). For Emacs user, to kill meas to cut. To yank
+or paste the just-killed text, type ~p~ (~meow-yank~). If you ever changed your
+mind and decided to discard the changes, hit ~u~ (~meow-undo~).
+
+The above ~c, s, p, u~ operations work on the line level too. You may want to
+experiment with them on your own.
