@@ -1,9 +1,9 @@
 #+BEGIN_EXAMPLE
-                          ▁▁▁▁▁▁▁▁   ▁▁▁  ▁▁▁▁▁      ▁▁
-                         ┃ '▁ ` ▁ \ / ▁ \/ ▁ \ \ /\ / /
-                         ┃ ┃ ┃ ┃ ┃ ┃  ▁▁/ (▁) \ V  V /
-                         ┃▁┃ ┃▁┃ ┃▁┃\▁▁▁┃\▁▁▁/ \▁/\▁/
-                         Modal Editing Of Wonder
+                          ________   ___  _____      __
+                         | '_ ` _ \ / _ \/ _ \ \ /\ / /
+                         | | | | | |  __/ (_) \ V  V /
+                         |_| |▁| |▁|\___|\___/ \_/\_/
+                            Modal Editing Of Wonder
 #+END_EXAMPLE
 
 ** INTRODUCTION
