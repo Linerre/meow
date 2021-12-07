@@ -152,26 +152,45 @@ Hit 3 and the selection will expand to the beginning of the 3rd line, *without*
 selecting it. What's more, Meow is flexible enough to do this in a reversed
 manner. Type ~;~ (~meow-reverse~) to try it out yourself.
 
+#+BEGIN_QUOTE
+Managing senior programmers is like herding cats.
+
+    -- Dave Platt
+#+END_QUOTE
+
 ** EDITING
 ฅ^•ﻌ•^ฅ --------------------------- SECTION 3 --------------------------- ฅ^•ﻌ•^ฅ
 
                     🐾 MAKING CHANGES
 
                     Now that you can move around and select stuff, it's time to
-                    make changes to buffer content. In normal mode, there are
-                    five frequently used keys for editing: ~c, d, p, s, u~.
+                    make changes to buffer content. There are five frequently
+                    used keys for changing text in normal mode: ~c, d, p, s, u~.
 
-    .---, .---,     Example: to change a word, select it first (~e~) and then
-    │ e │+│ c │     change (~c~) it by typing in the new word. Of course, you
-    `---' `---'     can expand the selection and then change a bunch of words.
+    .---,           To change a word, select the word first (~e~) and then
+    │ c │           press ~c~. You will find you are in insert mode. Of course,
+    `---'           you can expand the selection and then change all of them.
+ ~meow-change~      Similarly, to change a whole line, select it with ~x~ and
+                    then change (~c~) it. Again, you can expand the selection
+                    to include multiple lines and replace them with new text.
 
-    .---, .---,     Similarly, to change a whole line, select it with ~x~ and
-    │ x │+│ c │     then change (~c~) it. Again, Of course, you
-    `---' `---'     can expand the selection and then change a bunch of words.
+    .---,           To delete a single character, press the key ~d~. Note this
+    │ d │           command by default deletes forward, meaning it will delete
+    `---'           the white space right ahead of a selection. If there is no
+ ~meow-delete~      selection, it removes the character under the current cursor.
+                    The key ~D~, when pressed, will delete backward (~meow-backward-delete~).
 
-       .---,        If you want to delete the selected object (word, phrase or
-       │ s │        line), press ~s~ (~meow-kill~). For Emacs user, to kill
-       `---'        means to cut. Therefore, to yank (or paste) the just-killed
-                    text, type ~p~ (~meow-yank~). If you later changed your mind
-                    and decide to discard the changes, hit ~u~ (~meow-undo~) a
-                    few times to go back.
+    .---,           If you want to delete the selected object (word, phrase or
+    │ s │           line), press ~s~. Note, if there is no selection at all,
+    `---'           pressing the key ~s~ will act as if you pressed ~C-k~ (kill
+ ~meow-kill~        rest of current line or one or more lines).
+
+    .---,           In Emacs, to kill means to cut, meaning you can yank (or
+    │ p │           paste) the killed text. To do so, press the key ~p~. If you
+    `---'           killed an entire line, then ~p~ will yank it right above the
+ ~meow-yank~        current line.
+
+    .---,           If you later changed your mind and would like to undo the
+    │ u │           changes, press ~u~ a few times. *TODO*: explain ~U~?
+    `---'           next: open-above and open-below
+ ~meow-undo~
