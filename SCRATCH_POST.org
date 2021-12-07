@@ -167,12 +167,12 @@ Managing senior programmers is like herding cats.
                     make changes to buffer content. There are five frequently
                     used keys for changing text in normal mode: ~c, d, p, s, u~.
 
-    .---,           To change a word, select the word first (~e~) and then
-    │ c │           press ~c~. You will find you are in insert mode. Of course,
-    `---'           you can expand the selection and then change all of them.
- ~meow-change~      Similarly, to change a whole line, select it with ~x~ and
-                    then change (~c~) it. Again, you can expand the selection
-                    to include multiple lines and replace them with new text.
+    .---,           To change a word, select the word first (~e~) and then\\
+    │ c │           press ~c~. You will find you are in insert mode. Of course,\\
+    `---'           you can expand the selection and then change all of them.\\
+ ~meow-change~      Similarly, to change a whole line, select it with ~x~ and\\
+                    then change (~c~) it. Again, you can expand the selection\\
+                    to include multiple lines and replace them with new text.\\
 
     .---,           To delete a single character, press the key ~d~. Note this
     │ d │           command by default deletes forward, meaning it will delete
