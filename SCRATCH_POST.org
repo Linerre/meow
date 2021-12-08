@@ -95,62 +95,65 @@ A cat takes more interest in your code than your spouse or your boss.
     --Michael DiSibio
 #+END_QUOTE
 
-** SELECTIONS
+** SELECTIONS I
 ฅ^•ﻌ•^ฅ --------------------------- SECTION 2 --------------------------- ฅ^•ﻌ•^ฅ
+
 
                     🐾 SELECTION -- WORD CLUSTER
 
-Suppose you want to select a chunk of words instead of a single one, you can
-extend the word-level selection with ~meow-expand~. You may have already noticed
-in the previous section that when hitting ~e~ or ~b~ to move and select, there
-are digits (0-9) blinking at the end of some words ahead of or behind the
-current selection. Take the following sentence as an example.
-#+BEGIN_EXAMPLE
+                     Suppose you want to select a chunk of words instead of a
+   .---, .---,       single one, you can extend the word-level selection with
+   │ e │+│0-9│       ~meow-expand-N~, where ~N~ is a digit of 0-9. You may have
+   `---' `---'       already noticed in the previous section that when you hit
+~meow-expand-[0-9]~  ~e~ or ~b~ to move and select, there are digits (0-9)
+                     blinking at the end of the words ahead of the current
+                     selection (or behind, if you select backward). Take the
+                     below sentence as an example:
 
-▒▒▒▒With Meow comes the power of modal editing.▒▒▒▒
-                    └─────── to select ──────┘
+                     ▒▒▒▒With Meow comes the power of modal editing.▒▒▒▒
+                                         └─────── to select ──────┘
 
-#+END_EXAMPLE
-To select the last five words, first move the cursor to "t" of "the". Then type
-~e~, and you will see some digits showing up quickly and then disappearing:
-#+BEGIN_EXAMPLE
+                     To select the last five words, first move the cursor to "t"
+                     of "the" and then type ~e~. You will see some digits
+                     show up and soon disappear:
 
-▒▒▒▒With Meow comes the powe1 o2 moda3 editin4.▒▒▒▒
-                   ↱└─┘     ⇡  ⇡     ⇡       ⇡
-               selected
-                        ↣↣↣ select forward ↣↣↣
+                     ▒▒▒▒With Meow comes the powe1 o2 moda3 editin4.▒▒▒▒
+                                        ↱└─┘     ⇡  ⇡     ⇡       ⇡
+                                   selected
+                                             ↣↣↣ select forward ↣↣↣
 
-#+END_EXAMPLE
-Note except for the selected "the", all the words that follow have their last
-letter replaced with a digit. If you feel the digit's showing-up time is too
-short, you may want to add ~(setq meow-expand-hint-remove-delay 1.5)~ to your
-init.el. For now, just redo the selection and type any of 1, 2, 3, 4. Now you
-have acquired the power of ~meow-expand-x~, where x is a digit in the range of
-[0-9].
+                     All but the selected words have their last letter replaced
+      .---,          with a digit. If you feel the digit's showing-up time is
+      │ g │          too short, you may want to add the following line to your
+      `---'          init.el:
+  ~meow-cancel~
+                              ~(set meow-expand-hint-remove-delay 1.5)~
+                     To cancel the current selection, press the key ~g~.
+
 
                     🐾 SELECTION -- LINE
 
-Wanna select more? Great! Let's select lines this time. In normal mode, type ~x~
-and a line will be selected. Press ~x~ again, you will select yet another line!
-You can keep doing this until all the lines you want are included.
+                    Wanna select more? Great! Let's select lines this time. In
+      .---,         normal mode, type ~x~. The current line will be selected.
+      │ x │         Press ~x~ again, you will select yet another line! You can
+      `---'         keep doing this until you include all the lines you want.
+   ~meow-line~
 
-Now, cancel the selection with ~g~. It's worth knowing that ~meow-expand-x~ will
-automatically extend to line-level when you select lines. Suppose you have the
-first line selected.
-#+BEGIN_EXAMPLE
+                    Now, cancel the selection with ~g~. It's worth knowing that
+                    ~meow-expand-x~ will automatically function at line-level
+                    when you select lines. Suppose you have the first line
+                    selected in the text below:
 
-┌────────────────────── selected ──────────────────────┐
-First of all, there’s the name that the family use daily,
-1     Such as Peter, Augustus, Alonzo, or James,
-2uch as Victor or Jonathan, George or Bill Bailey—
-3     All of them sensible everyday names.
-4     -- T.S. Eliot
+                    ┌─────────────── selected ──────────────┐
+                    The Naming of Cats is a difficult matter,
+                    1t isn’t just one of your holiday games;
+                    2ou may think at first I’m as mad as a hatter
+                    3hen I tell you, a cat must have THREE DIFFERENT NAMES.
 
-#+END_EXAMPLE
-
-Hit 3 and the selection will expand to the beginning of the 3rd line, *without*
-selecting it. What's more, Meow is flexible enough to do this in a reversed
-manner. Type ~;~ (~meow-reverse~) to try it out yourself.
+      .---,         Hit 3 and the selection will expand to the beginning of the
+      │ ; │         3rd line, *without* selecting it. What's more, Meow is
+      `---'         flexible enough to do this in a reversed manner. Type ~;~ to
+   ~meow-reverse~   try it out yourself.
 
 #+BEGIN_QUOTE
 Managing senior programmers is like herding cats.
@@ -165,7 +168,8 @@ Managing senior programmers is like herding cats.
 
                     Now that you can move around and select stuff, it's time to
                     make changes to buffer content. There are five frequently
-                    used keys for changing text in normal mode: ~c, d, p, s, u~.
+                    used keys for changing text in normal mode: ~c~, ~d~, ~p~,
+                    ~s~, ~u~.
 
     .---,           To change a word, select the word first (~e~) and then press
     │ c │           the key ~c~. You will find you are in insert mode. Of course,
@@ -176,14 +180,19 @@ Managing senior programmers is like herding cats.
 
     .---,           To delete a single character, press the key ~d~. Note this
     │ d │           command by default deletes forward, meaning it will delete
-    `---'           the white space right ahead of a selection. If there is no
- ~meow-delete~      selection, it removes the character under the current cursor.
-                    The key ~D~, when pressed, will delete backward (~meow-backward-delete~).
+    `---'           the white space right in front of a selection. If there is
+ ~meow-delete~      nothing selected, it removes the character under the current
+                    cursor. The key ~D~, when pressed, will delete backward (~meow-backward-delete~).
 
     .---,           If you want to delete the selected object (word, phrase or
     │ s │           line), press ~s~. Note, if there is no selection at all,
     `---'           pressing the key ~s~ will act as if you pressed ~C-k~ (kill
  ~meow-kill~        rest of current line or one or more lines).
+
+    .---,           However, there are times when you want to just copy the
+    │ y │           selected text. In that case, press the key ~y~ after you
+    `---'           select some text.
+ ~meow-save~
 
     .---,           In Emacs, to kill means to cut, meaning you can yank (or
     │ p │           paste) the killed text. To do so, press the key ~p~. If you
@@ -194,3 +203,15 @@ Managing senior programmers is like herding cats.
     │ u │           changes, press ~u~ a few times. *TODO*: explain ~U~?
     `---'           next: open-above and open-below
  ~meow-undo~
+
+ #+BEGIN_QUOTE
+ I are programmers. I make computer beep, boop, beep, beep, boop.
+
+        /\_/\
+       ( o.o )
+        > - <
+ #+END_QUOTE
+
+** SELECTIONS II
+ฅ^•ﻌ•^ฅ --------------------------- SECTION 4 --------------------------- ฅ^•ﻌ•^ฅ
+ *TODO*: inner-of-thing, beginning-of-thing, meow-block
