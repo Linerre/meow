@@ -28,7 +28,8 @@ purring, not the fans of the computer.
 #+END_QUOTE
 
 ** BASICS
-ฅ^•ﻌ•^ฅ --------------------------- SECTION 1 --------------------------- ฅ^•ﻌ•^ฅ
+ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
+
 
                     🐾 MODES
 
@@ -36,7 +37,7 @@ purring, not the fans of the computer.
        .---,        modes. There are *five* modes in Meow and the most used two
        │ i │        are *NORMAL* and *INSERT*. If you set up Meow properly, at
        `---'        the bottom left you should see NORMAL, indicating you are
-                    now in normal mode. Make sure Caps Lock is OFF and press
+    ~meow-insert~   now in normal mode. Make sure Caps Lock is OFF and press
                     ~i~. The indicator turns to INSERT and you are able to type
        .---,        in characters as usual. This is insert mode. Press ~ESC~ or
        │ESC│        ~C-[~ to leave it and return to normal mode. The other
@@ -64,39 +65,87 @@ purring, not the fans of the computer.
                     cursor position than if the user had to move their hand to
                     reach the arrow keys.
 
+
                     🐾 SELECTION -- SINGLE WORD
 
-                    But this is still tedious. Meow offers more when it comes to
- ▒▒▒word▋▒▒▒        moving the cursor. Press ~e~, you will see a /word/ has been
-    ⇡               selected and the cursor moves to its end. Press ~e~ again to
- at word start      move further and select more[*]. ~b~ key does the same, but
-                    in the opposite direction.
+     .---,          But moving like this is still tedious. Meow offers more
+     │ e │          when it comes to moving the cursor. Move the cursor to the
+     `---'          beginning of any word and press ~e~, you will see this word
+~meow-next-word~    has been selected and the cursor moves to its end. Press ~e~
+                    again to move to the next word and select it.
 
- ▒▒▒␣word▋▒▒▒       One or more extra blank spaces might be included in the
-    ⇡               selection if the cursor is before/after the word start/end.
- before the word    In the left illustrations, symbol ▒ denotes the text around
- after the word     the target /word/. ⇡ and ⇣ indicate where the cursor was
-         ⇣          before the movement, while ▋shows the cursor position (and
- ▒▒▒▋word␣▒▒▒       shape) after the movement.
+     .---,          You probably have noticed this type of selection ignores
+     │ E │          hyphenated words such as "real-world" and variable names in
+     `---'          snake case like "my_phone". To deal with these cases, Meow
+~meow-next-symbol~  offers another augmented movement command: ~E~ (hold ~Shift~
+                    and press ~e~).
 
-                    It's therefore important to know this key idea behind Meow:
- ▒▒▒word▋▒▒▒        *Movement means selection*. One advantage of this behavior
-    ↣↣↣↣            is that users immediately get two useful positions each time
- move forward       they move (and select): the start and end of a selection.
-                    When moving forwards word-wise, the cursor will stop right
- ▒▒▒▋word▒▒▒        after the word's last character. On the contrary, moving
-     ↢↢↢↢           backwards one word will place the cursor right before the
- move backward      first letter.
+  .---,  .---,      To move backward word-wise or symbol-wise, press key ~b~ or
+  │ b │  │ B │      ~B~ respectively.
+  `---'  `---'
+~meow-back-word/symbol~
 
+     .---,          To cancel the current selection, there are several ways in
+     │ g │          Meow. The easiest one is to just move the cursor using any
+     `---'          of the basic movement keys like left and right. But since
+                    the cursor also gets moved, this method may not always
+                    achieve the desired effect. Meow provides a much nicer
+                    command at your disposal: ~g~ (~meow-cancel-selection~).
+
+
+                    🐾 SELECTION -- A CLOSER LOOK
+
+                    While you move using the above-mentioned commands, you also
+                    select. Let's take a closer look at them.
+
+                    It's therefore important to know this key idea behind Meow: *Movement means selection*. One advantage of this behavior
+                    is that users immediately get two useful positions each time
+                    they move (and select): the start and end of a selection.
+
+▒▒▒  - context      In the following illustrations, symbol ▒ denotes the text
+▋    - cursor       around the target /word/. ⇡ and ⇣ indicate where the cursor
+word - target word  was before the movement, while ▋shows the cursor position
+␣    - blank space  (and shape) after the movement/selection.
+⇡ ⇣  - position
+
+                    If you press ~e~ when the cursor is right at the start of an
+ ▒▒▒cats▋▒▒▒        arbitrary word, you will select just the word (no hyphen).
+    ⇡               The cursor moves to its end and stops there.
+ at word start
+
+                    Press ~e~ again, and now you see something different. This
+ ▒▒▒␣meow▋▒▒▒       time, the word /meow/ plus a blank space gets selected. Press
+                    ~e~ a few more times, and you will find Meow keeps moving
+                    and selecting in this way.
+
+
+                    🐾 SELECTION -- A CLOSER LOOK
+
+    .---,           The two useful positions, the start and end of the current
+    │ i │           selection, makes it easy to /insert/ or /append/ text before
+    `---'           or after the selected. This also works for other kinds of
+ ~meow-insert~      selected range (chunk of words or lines) in the following
+                    sections.
+
+    .---,           With a /word/ selected, press ~i~, and you will enter insert
+    │ a │           mode. Now if you start typing, the characters will be placed
+    `---'           before the beginning of your selection. In contrast, hitting
+ ~meow-append~      ~a~ will also place you in insert mode, but this time you
+                    append text to the end.
+
+                    You might think this is just like Vim. Not exactly. In Vim,
+                    movement commands don't select any thing by default. It also
+                    requires more keys to insert or append to a selected range
+                    in Vim's visual mode.
 
 #+BEGIN_QUOTE
 A cat takes more interest in your code than your spouse or your boss.
 
-    --Michael DiSibio
+    -- Michael DiSibio
 #+END_QUOTE
 
 ** SELECTIONS I
-ฅ^•ﻌ•^ฅ --------------------------- SECTION 2 --------------------------- ฅ^•ﻌ•^ฅ
+ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
 
 
                     🐾 SELECTION -- WORD CLUSTER
@@ -123,12 +172,11 @@ A cat takes more interest in your code than your spouse or your boss.
                                              ↣↣↣ select forward ↣↣↣
 
                      All but the selected words have their last letter replaced
-      .---,          with a digit. If you feel the digit's showing-up time is
-      │ g │          too short, you may want to add the following line to your
-      `---'          init.el:
-  ~meow-cancel~
+                     with a digit. If you feel the digit hints disappear too
+                     quickly, you may want to add the following line to your
+                     init.el:
+
                               ~(set meow-expand-hint-remove-delay 1.5)~
-                     To cancel the current selection, press the key ~g~.
 
 
                     🐾 SELECTION -- LINE
@@ -137,12 +185,12 @@ A cat takes more interest in your code than your spouse or your boss.
       .---,         normal mode, type ~x~. The current line will be selected.
       │ x │         Press ~x~ again, you will select yet another line! You can
       `---'         keep doing this until you include all the lines you want.
-   ~meow-line~
+   ~meow-line~      Using Emacs keybindings ~ctrl-p/n~ will expand your current
+                    selection backward or forward accordingly.
 
-                    Now, cancel the selection with ~g~. It's worth knowing that
-                    ~meow-expand-x~ will automatically function at line-level
-                    when you select lines. Suppose you have the first line
-                    selected in the text below:
+                    It's worth mentioning that ~meow-expand-x~ will
+                    automatically function at line level when you select lines.
+                    Suppose you have the first line selected in the text below:
 
                     ┌─────────────── selected ──────────────┐
                     The Naming of Cats is a difficult matter,
@@ -162,9 +210,10 @@ Managing senior programmers is like herding cats.
 #+END_QUOTE
 
 ** EDITING
-ฅ^•ﻌ•^ฅ --------------------------- SECTION 3 --------------------------- ฅ^•ﻌ•^ฅ
+ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
 
-                    🐾 MAKING CHANGES
+
+                    🐾 REPLACING / DELETING
 
                     Now that you can move around and select stuff, it's time to
                     make changes to buffer content. There are five frequently
@@ -182,16 +231,20 @@ Managing senior programmers is like herding cats.
     │ d │           command by default deletes forward, meaning it will delete
     `---'           the white space right in front of a selection. If there is
  ~meow-delete~      nothing selected, it removes the character under the current
-                    cursor. The key ~D~, when pressed, will delete backward (~meow-backward-delete~).
+                    cursor. The key ~D~, when pressed, will delete backward
+                    (~meow-backward-delete~).
 
     .---,           If you want to delete the selected object (word, phrase or
     │ s │           line), press ~s~. Note, if there is no selection at all,
     `---'           pressing the key ~s~ will act as if you pressed ~C-k~ (kill
  ~meow-kill~        rest of current line or one or more lines).
 
+
+                    🐾 COPYING / PASTING
+
     .---,           However, there are times when you want to just copy the
     │ y │           selected text. In that case, press the key ~y~ after you
-    `---'           select some text.
+    `---'           select some text. Note, this *must* be used with selection.
  ~meow-save~
 
     .---,           In Emacs, to kill means to cut, meaning you can yank (or
@@ -204,8 +257,20 @@ Managing senior programmers is like herding cats.
     `---'           next: open-above and open-below
  ~meow-undo~
 
+                    It's also very often that you want to insert a new line
+    .---,           above or below the current line. In normal mode, press
+    │ I │           ~I~ (or ~Shift~ + ~i~) to insert one line above. To insert
+    `---'           one line below, press ~A~ (or ~Shift~ + ~a~). There is no
+~meow-open-above~   need to select the current line before inserting, but you
+                    can select first and then insert anyway. It's worth
+    .---,           mentioning that inserting always uses the cursor line as its
+    │ A │           base. This is indeed quite intuitive. Suppose you have
+    `---'           selected three lines forward so the cursor line is the last
+~meow-open-below~   one. Now if you insert either above or below, the new line
+                    will be put above or under the last line of your selection.
+
  #+BEGIN_QUOTE
- I are programmers. I make computer beep, boop, beep, beep, boop.
+ I are programmer. I make computer beep, boop, beep, beep, boop.
 
         /\_/\
        ( o.o )
@@ -213,5 +278,75 @@ Managing senior programmers is like herding cats.
  #+END_QUOTE
 
 ** SELECTIONS II
-ฅ^•ﻌ•^ฅ --------------------------- SECTION 4 --------------------------- ฅ^•ﻌ•^ฅ
- *TODO*: inner-of-thing, beginning-of-thing, meow-block
+ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
+
+
+                    🐾 SELECTING INSIDE
+
+                    In programming, it's often the case that a string or a block
+  .---,             of code need to be selected. Meow provides a set of rich and
+  │ , │_.           consistent commands to make the movement and selection even
+  `---' │`.---,     more flexible.
+        │ │ g │
+        │ `---'     Example: to select a string within double quotes, move the
+        │`.---,     cursor anywhere inside the quotation marks and then press
+        │ │ r │     the key ~,~. You will see a buffer pops up showing you the
+        │ `---'     a series of keys and their corresponding selecting range.
+        │`.---,     In this case, hit ~g~ to select the string. Note that the
+        │ │ c │     double quotes are not included. This is expected because of
+        │ `---'     the name: *inner-of-thing*. You are encouraged to try out
+         `.---,     other inner-of-thing commands that are not listed here. Some
+          │ l │     of them, however, may make more sense when you are coding in
+          `---'     Lisp languages such as Emacs Lisp.
+
+
+                    🐾 SELECTING BOUNDS
+
+                    It would be limited or even useless if Meow could select
+  .---,             only within the boundary of objects. Fortunately, that's not
+  │ . │_.           true. In the above example, if you want to also include the
+  `---' │`.---,     quotes on both ends, press ~.~ and then ~g~. The name for
+        │ │ g │     selection of this type is also straightforward:
+        │ `---'     *bounds-of-thing*. Commonly used boundary markers are round
+        │`.---,     brackets or parentheses ~()~, brackets ~[]~, curly braces
+        │ │ r │     ~{}~ and single quotation marks ~'~. Note, in Lisp dialects,
+        │ `---'     a single quote is an important primitive and is used alone,
+        │`.---,     that is, not surrounding text in pairs. So there is no
+        │ │ c │     single-quoted string at all in these languages. In others,
+        │ `---'     such as Python or JavaScript, you can expect selecting a
+         `.---,     single-quoted string is exactly the same as targeting
+          │ l │     double-quoted ones. Now you have seen three different ways
+          `---'     of selecting a single line, why not compare them to see the
+                    difference? You will be surprised by Meow's power!
+
+
+                    🐾 SELECTING TO START/END
+
+                    Similarly, there is another pair of commands that allow you
+  .---,  .---,      to start selecting from the current point to the beginning
+  │ [ │  │ ] │      or end of an object (e.g string, line, paragraph). This is
+  `---'  `---'      useful, say, when you want to a delete a string from the
+                    middle till its end.
+
+
+                    🐾 SELECTING BLOCKS
+
+    .---,           Although *bounds-of-thing* makes it a matter of two-key hit
+    │ o │           to select the bracketed content. There is yet one more
+    `---'           choice in Meow: ~o~. This time, just a single key! Move the
+ ~meow-block~       cursor inside any pair of brackets and press the key ~o~. It
+                    acts as if you pressed ~.~ + ~r~ or the similar for other
+                    types of brackets. Keep pressing ~o~, and you will see it
+    .---,           automatically expands the range to the outer blocks.
+    │ O │
+    `---'           From time to time, you may find it's convenient or even
+~meow-to-block~     necessary to rely on a block to bring your selection to
+                    a stop, that is, a block happens to be at the end of what
+                    you want to kill. Press ~O~ to mark the range for killing.
+
+#+BEGIN_QUOTE
+All software engineers want to be treated like your typical house cat. That
+mostly translates to, "Leave me alone! But wait, give me belly rubs too."
+
+    -- Jonah Jolley
+#+END_QUOTE
