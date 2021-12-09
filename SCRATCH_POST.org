@@ -98,7 +98,8 @@ purring, not the fans of the computer.
                     While you move using the above-mentioned commands, you also
                     select. Let's take a closer look at them.
 
-                    It's therefore important to know this key idea behind Meow: *Movement means selection*. One advantage of this behavior
+                    It's therefore important to know this key idea behind Meow:
+                    *Movement means selection*. One advantage of this behavior
                     is that users immediately get two useful positions each time
                     they move (and select): the start and end of a selection.
 
