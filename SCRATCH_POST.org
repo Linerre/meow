@@ -10,15 +10,28 @@
 ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
 
 Welcome to Meow! Meow is a modal-editing package for Emacs, inspired by Kakoune.
-This is a hands-on tutorial. It aims to help both new and experienced Emacs
-users get started with or migrate to Meow as easily as possible.
+This is tutorial aims to help both new and experienced Emacs users get started
+with or migrate to Meow as easily as possible.
 
-In the first section, you will learn about the basics of movement and editing.
+This tutorial assumes you are using the QWERTY keybindings configuration
+included in Meow's GitHub repo, but any customized configs based on it should
+work as well. Just pay attention to the actual commands prefixed with ~meow-~,
+and replace the suggested keys with your own keybindings.
+
+Similarly, if you are using non-QWERTY keyboard layouts, there is no need to
+change back to QWERTY layout. Instead, simply press the keys that are bound
+with Meow's corresponding commands. Keep in mind that Meow comes with sane
+defaults and nothing more. You are free to modify any default key bindings to
+meet your own expectations.
+
+In the Basics section, you will learn about the basics of movement and editing.
 This will give you a feel for Meow.
 
+*TODO*
+need to add more details about each section.
 In the second section, you will learn more advanced functionalities such as
-'expand' and 'inner-of', which will enable you to move further and faster. The
-selection of text will also become more accurate and flexible.
+'expand' and 'inner-of-thing', which will enable you to move faster and select
+smarter.
 
 #+BEGIN_QUOTE
 If the cat comes up and it sits in my lap, I want to hear the sound of the cat
@@ -30,14 +43,14 @@ purring, not the fans of the computer.
 ** BASICS
 ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
 
-
                     🐾 MODES
 
                     In "modal editing", users interact with the text through
        .---,        modes. There are *five* modes in Meow and the most used two
        │ i │        are *NORMAL* and *INSERT*. If you set up Meow properly, at
        `---'        the bottom left you should see NORMAL, indicating you are
-    ~meow-insert~   now in normal mode. Make sure Caps Lock is OFF and press
+   ~meow-insert~    now in normal mode.
+                    Make sure Caps Lock is OFF and press
                     ~i~. The indicator turns to INSERT and you are able to type
        .---,        in characters as usual. This is insert mode. Press ~ESC~ or
        │ESC│        ~C-[~ to leave it and return to normal mode. The other
@@ -50,9 +63,9 @@ purring, not the fans of the computer.
                     The movement in a buffer (representations of the content
        .---,        of a file opened in Emacs) can be done using the arrow keys.
        │ ↑ │        When pressed, the cursor will move one column/row in the
-   .---'---'---,    the corresponding direction. Hold any of ~←~, ~↑~, ~→~, ~↓~
-   │ ← │ ↓ │ → │    to continue the movement until the place where you want
-   `---'---'---`    to stop.
+   .---'---'---,    corresponding direction. Hold any of ~←~, ~↑~, ~→~, ~↓~ to
+   │ ← │ ↓ │ → │    continue the movement until where you want to stop.
+   `---'---'---`
 
                     However, furthering the tradition of mode-based editors,
  .---,---,---,---,  the ~h~, ~j~, ~k~, ~l~ keys are often used for the same
@@ -137,7 +150,14 @@ word - target word  was before the movement, while ▋shows the cursor position
                     You might think this is just like Vim. Not exactly. In Vim,
                     movement commands don't select any thing by default. It also
                     requires more keys to insert or append to a selected range
-                    in Vim's visual mode.
+                    in the visual mode. When there is no text selected, ~a~ and
+                    ~i~ will behave the same. This is reasonable because Meow
+                    tries to insert or append to a zero-width region. If you
+                    really want the Vim-like ~a~ and ~i~, add to your init.el:
+                    #+BEGIN_SRC emacs-lisp
+                      ;; vim-like inserting and appending
+                      (setq meow-use-cursor-position-hack t)
+                    #+END_SRC
 
 #+BEGIN_QUOTE
 A cat takes more interest in your code than your spouse or your boss.
@@ -145,7 +165,7 @@ A cat takes more interest in your code than your spouse or your boss.
     -- Michael DiSibio
 #+END_QUOTE
 
-** SELECTIONS I
+** SELECTING I
 ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
 
 
@@ -176,9 +196,10 @@ A cat takes more interest in your code than your spouse or your boss.
                      with a digit. If you feel the digit hints disappear too
                      quickly, you may want to add the following line to your
                      init.el:
-
-                              ~(set meow-expand-hint-remove-delay 1.5)~
-
+                     #+BEGIN_SRC emacs-lisp
+                       ;; show expand hints for a longer time
+                       (set meow-expand-hint-remove-delay 1.5)
+                     #+END_SRC
 
                     🐾 SELECTION -- LINE
 
@@ -204,11 +225,11 @@ A cat takes more interest in your code than your spouse or your boss.
       `---'         flexible enough to do this in a reversed manner. Type ~;~ to
    ~meow-reverse~   try it out yourself.
 
-#+BEGIN_QUOTE
-Managing senior programmers is like herding cats.
+                    #+BEGIN_QUOTE
+                    Managing senior programmers is like herding cats.
 
-    -- Dave Platt
-#+END_QUOTE
+                        -- Dave Platt
+                    #+END_QUOTE
 
 ** EDITING
 ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
@@ -263,7 +284,7 @@ Managing senior programmers is like herding cats.
     │ I │           ~I~ (or ~Shift~ + ~i~) to insert one line above. To insert
     `---'           one line below, press ~A~ (or ~Shift~ + ~a~). There is no
 ~meow-open-above~   need to select the current line before inserting, but you
-                    can select first and then insert anyway. It's worth
+                    can if you want to and then insert anyway. It's worth
     .---,           mentioning that inserting always uses the cursor line as its
     │ A │           base. This is indeed quite intuitive. Suppose you have
     `---'           selected three lines forward so the cursor line is the last
@@ -278,7 +299,7 @@ Managing senior programmers is like herding cats.
         > - <
  #+END_QUOTE
 
-** SELECTIONS II
+** SELECTING II
 ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
 
 
@@ -292,7 +313,7 @@ Managing senior programmers is like herding cats.
         │ `---'     Example: to select a string within double quotes, move the
         │`.---,     cursor anywhere inside the quotation marks and then press
         │ │ r │     the key ~,~. You will see a buffer pops up showing you the
-        │ `---'     a series of keys and their corresponding selecting range.
+        │ `---'     a series of keys and their corresponding selecting ranges.
         │`.---,     In this case, hit ~g~ to select the string. Note that the
         │ │ c │     double quotes are not included. This is expected because of
         │ `---'     the name: *inner-of-thing*. You are encouraged to try out
@@ -351,3 +372,6 @@ mostly translates to, "Leave me alone! But wait, give me belly rubs too."
 
     -- Jonah Jolley
 #+END_QUOTE
+
+** KEYPAD
+** BEACON
