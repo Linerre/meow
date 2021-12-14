@@ -374,4 +374,35 @@ mostly translates to, "Leave me alone! But wait, give me belly rubs too."
 #+END_QUOTE
 
 ** KEYPAD
+ฅ^•ﻌ•^ฅ ---------------------------------------------------------------- ฅ^•ﻌ•^ฅ
+
+
+***                 🐾 KEYPAD MODE
+                    With all the commands and keys described above, it could
+    .---,           happen that you still heavily rely on the modifier keys such
+    │SPC│_.         ~C-~ and ~M-~ in your daily routines within Emacs. You might
+    `---' │`.---,   be a long-time user of evil-mode or god-mode and just can't
+          │ │ x │   live without your sweet leader keys. Inspired by god-mode,
+          │ `---'   Meow implements its own keypad mode. In this mode, any
+          │`.---,   single key pressed will be treated as if it is prefixed with
+          │ │ c │   a modifier key.
+          │ `---'
+          │`.---,   For example, you have a command whose keybinding is as crazy
+          │ │ h │   as ~C-x C-x C-y C-y~. In Meow you just need ~SPC x x y y~.
+          │ `---'   It's 3 keys fewer and saves you from hurting your little
+          │`.---,   finger. Let's take a closer look at this key sequence. The
+          │ │ m │   first 2, ~SPC x~ will invoke keypad mode and make Emacs
+          │ `---'   think you just hit ~C-x~. Then all the single keys, ~x y y~,
+           `.---,   will act as if they are prefixed with ~C-~, that is, they
+            │ g │   are translated into ~C-x C-y C-y~.
+            `---'
+                    The table below shows a map between keypad mode and the keys
+                    that invoked it:
+                    | Invoke Keypad Mode by | equal to |
+                    | ~SPC-x~               | ~C-x~    |
+                    | ~SPC-c~               | ~C-c~    |
+                    | ~SPC-h~               | ~C-h~    |
+                    | ~SPC-m~               | ~M-~     |
+                    | ~SPC-g~               | ~C-M-~   |
+
 ** BEACON
